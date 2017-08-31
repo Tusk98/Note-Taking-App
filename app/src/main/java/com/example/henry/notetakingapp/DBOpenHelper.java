@@ -28,17 +28,18 @@ public class DBOpenHelper extends SQLiteOpenHelper{
                     NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
                     ")";
 
-    public DBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public DBOpenHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-
+        sqLiteDatabase.execSQL(TABLE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+        onCreate(sqLiteDatabase);
     }
 }
