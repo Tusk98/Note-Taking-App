@@ -29,40 +29,41 @@ public class DBManager extends ContentProvider {
     uriMatcher.addURI(AUTHORITY, BASE_PATH + "/#", NOTES_ID);
   }
 
-  private SQLiteDatabase db;
+  private SQLiteDatabase database;
 
   @Override
   public boolean onCreate() {
     DBHelper helper = new DBHelper(getContext());
-    db = helper.getWritableDatabase();
+    database = helper.getWritableDatabase();
     return true;
   }
 
-  @Nullable
   @Override
-  public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
-    return null;
+  public Cursor query( Uri uri, String[] projection, String selection,
+                       String[] selectionArgs, String sortOrder) {
+
+    return database.query(DBHelper.TABLE_NOTES, DBHelper.ALL_COLUMNS, selection,
+            null, null, null, DBHelper.NOTE_CREATED + "DESC");
   }
 
-  @Nullable
   @Override
   public String getType(@NonNull Uri uri) {
     return null;
   }
 
-  @Nullable
   @Override
-  public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-    return null;
+  public Uri insert(Uri uri, ContentValues values) {
+    long id = database.insert(DBHelper.TABLE_NOTES, null, values);
+    return Uri.parse(BASE_PATH + "/" + id);
   }
 
   @Override
-  public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-    return 0;
+  public int delete(Uri uri, String selection, String[] selectionArgs) {
+    return database.delete(DBHelper.TABLE_NOTES, selection, selectionArgs);
   }
 
   @Override
-  public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-    return 0;
+  public int update( Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    return database.update(DBHelper.TABLE_NOTES, values, selection, selectionArgs);
   }
 }
