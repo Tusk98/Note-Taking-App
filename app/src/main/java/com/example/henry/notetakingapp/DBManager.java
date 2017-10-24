@@ -10,21 +10,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
- * Created by henry on 2017-08-31.
+ * Created by henry on 2017-10-24.
  */
 
-public class NotesProvider extends ContentProvider {
+public class DBManager extends ContentProvider {
 
-  private static final String AUTHORITY = "com.example.henry.notetakingapp.notesprovider";
+  private static final String AUTHORITY = "com.example.henry.notetakingapp.dbmanager";
   private static final String BASE_PATH = "notes";
-  public static final Uri CONTENT_URI =
-          Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+  public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH );
 
-  // Constants to identify requested operation
+  // Constant to identify the requested operation
   private static final int NOTES = 1;
   private static final int NOTES_ID = 2;
-
-  // Prase URI and identify which operation is requested
   private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
   static {
@@ -36,9 +33,9 @@ public class NotesProvider extends ContentProvider {
 
   @Override
   public boolean onCreate() {
-    DBOpenHelper helper = new DBOpenHelper(getContext());
+    DBHelper helper = new DBHelper(getContext());
     db = helper.getWritableDatabase();
-    return false;
+    return true;
   }
 
   @Nullable

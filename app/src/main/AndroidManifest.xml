@@ -18,9 +18,10 @@
     </activity>
 
     <provider
-      android:authorities="com.example.henry.notetakingapp.notesprovider"
-      android:name="NotesProvider"
-      android:exported="false"/>
+      android:authorities="com.example.henry.notetakingapp.dbmanager"
+      android:name=".DBManager"
+      android:exported="false" />
+
   </application>
 
 </manifest>

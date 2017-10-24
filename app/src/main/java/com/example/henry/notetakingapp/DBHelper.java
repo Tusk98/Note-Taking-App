@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by henry on 2017-08-30.
  */
 
-public class DBOpenHelper extends SQLiteOpenHelper{
+public class DBHelper extends SQLiteOpenHelper{
 
     //Constants for db name and version
     private static final String DATABASE_NAME = "notes.db";
@@ -19,6 +19,8 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     public static final String NOTE_ID = "_id";
     public static final String NOTE_TEXT = "noteText";
     public static final String NOTE_CREATED = "noteCreated";
+    public static final String[] ALL_COLUMNS =
+            {NOTE_ID, NOTE_TEXT, NOTE_CREATED};
 
     //SQL to create table
     private static final String TABLE_CREATE =
@@ -28,7 +30,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
                     NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
                     ")";
 
-    public DBOpenHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -38,7 +40,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVer, int newVer) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
         onCreate(sqLiteDatabase);
     }
